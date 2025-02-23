@@ -3,7 +3,7 @@ import Base from "./Base";
 import Permission from "./Permission";
 import type Guild from "./Guild";
 import type Client from "../Client";
-import type { RawRole, RoleTags, EditRoleOptions } from "../types/guilds";
+import type { RawRole, EditRoleOptions } from "../types/guilds";
 import type { JSONRole } from "../types/json";
 import { UncachedError } from "../util/Errors";
 
@@ -77,7 +77,7 @@ export default class Role extends Base {
             ...super.toJSON(),
             guildID:     this.guildID,
             name:        this.name,
-            permissions: this.permissions.toJSON(),
+            permissions: this.permissions.toJSON()
         };
     }
 }
