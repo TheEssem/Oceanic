@@ -630,17 +630,9 @@ export interface JSONPublicThreadChannel extends JSONThreadChannel {
     type: ChannelTypes.PUBLIC_THREAD;
 }
 export interface JSONRole extends JSONBase {
-    color: number;
     guildID: string;
-    hoist: boolean;
-    icon: string | null;
-    managed: boolean;
-    mentionable: boolean;
     name: string;
     permissions: JSONPermission;
-    position: number;
-    tags: RoleTags;
-    unicodeEmoji: string | null;
 }
 export interface JSONScheduledEvent extends JSONBase {
     channelID: string | null;
