@@ -133,8 +133,8 @@ export async function CHANNEL_UPDATE(data: DispatchEventMap["CHANNEL_UPDATE"], s
     const oldChannel = shard.client.getChannel<AnyGuildChannel>(data.id)?.toJSON() ?? null;
     let channel: AnyGuildChannel;
     if (oldChannel && oldChannel.type !== data.type) {
-        if (shard.client.channelGuildMap[data.id]) {
-            shard.client.guilds.get(shard.client.channelGuildMap[data.id])!.channels.delete(data.id);
+        if (shard.client.channelGuildMap.has(data.id)) {
+            shard.client.guilds.get(shard.client.channelGuildMap.get(data.id) as string)!.channels.delete(data.id);
         }
 
         channel = shard.client.util.updateChannel(data);
