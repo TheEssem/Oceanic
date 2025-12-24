@@ -86,7 +86,8 @@ import type {
     RPCApplicationState,
     StoreApplicationState,
     ApplicationVerificationState,
-    EntryPointCommandHandlerTypes
+    EntryPointCommandHandlerTypes,
+    SubscriptionStatuses
 } from "../Constants";
 
 export interface JSONAnnouncementChannel extends JSONThreadableChannel {
@@ -685,6 +686,17 @@ export interface JSONStageInstance extends JSONBase {
     privacyLevel: StageInstancePrivacyLevels;
     scheduledEventID: string | null;
     topic: string;
+}
+export interface JSONSubscription extends JSONBase {
+    canceledAt: number | null;
+    country?: string;
+    currentPeriodEnd: number;
+    currentPeriodStart: number;
+    entitlementIDs: Array<string>;
+    renewalSKUIDs: Array<string>;
+    skuIDs: Array<string>;
+    status: SubscriptionStatuses;
+    userID: string;
 }
 export interface JSONTeam extends JSONBase {
     icon: string | null;

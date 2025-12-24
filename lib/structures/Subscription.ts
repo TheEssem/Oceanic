@@ -1,7 +1,7 @@
 import Base from "./Base";
 import type Client from "../Client";
 import type { SubscriptionStatuses } from "../Constants";
-import type { RawSubscription } from "../types";
+import type { JSONSubscription, RawSubscription } from "../types";
 
 export default class Subscription extends Base {
     /** When the subscription was canceled. */
@@ -33,5 +33,20 @@ export default class Subscription extends Base {
         this.skuIDs = data.sku_ids;
         this.status = data.status;
         this.userID = data.user_id;
+    }
+
+    override toJSON(): JSONSubscription {
+        return {
+            ...super.toJSON(),
+            canceledAt:         this.canceledAt?.getTime() ?? null,
+            country:            this.country,
+            currentPeriodEnd:   this.currentPeriodEnd.getTime(),
+            currentPeriodStart: this.currentPeriodStart.getTime(),
+            entitlementIDs:     this.entitlementIDs,
+            renewalSKUIDs:      this.renewalSKUIDs,
+            skuIDs:             this.skuIDs,
+            status:             this.status,
+            userID:             this.userID
+        };
     }
 }

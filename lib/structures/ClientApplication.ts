@@ -6,6 +6,7 @@ import Entitlement from "./Entitlement";
 import BaseEntitlement from "./BaseEntitlement";
 import type SKU from "./SKU";
 import type Application from "./Application";
+import Subscription from "./Subscription";
 import type Client from "../Client";
 import type { RoleConnection, RoleConnectionMetadata, UpdateUserApplicationRoleConnectionOptions } from "../types/oauth";
 import type {
@@ -28,7 +29,8 @@ import type {
     ApplicationEmojis,
     CreateApplicationEmojiOptions,
     EditApplicationEmojiOptions,
-    ActivityInstance
+    ActivityInstance,
+    RawSubscription
 } from "../types/applications";
 import type { JSONClientApplication } from "../types/json";
 import type { ApplicationCommandTypes } from "../Constants";
@@ -40,6 +42,8 @@ export default class ClientApplication extends Base {
     entitlements: TypedCollection<RawEntitlement | RawTestEntitlement, Entitlement | TestEntitlement>;
     /** This application's [flags](https://discord.com/developers/docs/resources/application#application-object-application-flags). */
     flags: number;
+    /** The subscriptions for this application. This will almost certainly be empty unless you fetch subscriptions, or recieve new/updated subscriptions. */
+    subscriptions: TypedCollection<RawSubscription, Subscription>;
     constructor(data: RawClientApplication, client: Client) {
         super(data.id, client);
         this.entitlements = new TypedCollection(BaseEntitlement, client, Infinity, {
@@ -52,6 +56,7 @@ export default class ClientApplication extends Base {
             }
         }) as TypedCollection<RawEntitlement | RawTestEntitlement, Entitlement | TestEntitlement>;
         this.flags = data.flags;
+        this.subscriptions = new TypedCollection(Subscription, client);
         this.update(data);
     }
 

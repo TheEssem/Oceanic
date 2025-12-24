@@ -35,6 +35,7 @@ import VoiceState from "../structures/VoiceState";
 import AuditLogEntry from "../structures/AuditLogEntry";
 import type User from "../structures/User";
 import Soundboard from "../structures/Soundboard";
+import Subscription from "../structures/Subscription";
 import { isDeepStrictEqual } from "node:util";
 
 export async function APPLICATION_COMMAND_PERMISSIONS_UPDATE(data: DispatchEventMap["APPLICATION_COMMAND_PERMISSIONS_UPDATE"], shard: Shard): Promise<void> {
@@ -785,6 +786,23 @@ export async function STAGE_INSTANCE_UPDATE(data: DispatchEventMap["STAGE_INSTAN
     const oldStageInstance = guild?.stageInstances.get(data.id)?.toJSON() ?? null;
     const stateInstance = guild?.stageInstances.update(data) ?? new StageInstance(data, shard.client);
     shard.client.emit("stageInstanceUpdate", stateInstance, oldStageInstance);
+}
+
+export async function SUBSCRIPTION_CREATE(data: DispatchEventMap["SUBSCRIPTION_CREATE"], shard: Shard): Promise<void> {
+    const subscription = shard.client["_application"]?.subscriptions.update(data) ?? new Subscription(data, shard.client);
+    shard.client.emit("subscriptionCreate", subscription);
+}
+
+export async function SUBSCRIPTION_DELETE(data: DispatchEventMap["SUBSCRIPTION_DELETE"], shard: Shard): Promise<void> {
+    const subscription = shard.client["_application"]?.subscriptions.update(data) ?? new Subscription(data, shard.client);
+    shard.client["_application"]?.subscriptions.delete(data.id);
+    shard.client.emit("subscriptionDelete", subscription);
+}
+
+export async function SUBSCRIPTION_UPDATE(data: DispatchEventMap["SUBSCRIPTION_UPDATE"], shard: Shard): Promise<void> {
+    const oldSubscription = shard.client["_application"]?.subscriptions.get(data.id)?.toJSON() ?? null;
+    const subscription = shard.client["_application"]?.subscriptions.update(data) ?? new Subscription(data, shard.client);
+    shard.client.emit("subscriptionUpdate", subscription, oldSubscription);
 }
 
 export async function THREAD_CREATE(data: DispatchEventMap["THREAD_CREATE"], shard: Shard): Promise<void> {

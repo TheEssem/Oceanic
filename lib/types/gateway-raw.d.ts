@@ -23,7 +23,8 @@ import type {
     RawEntitlement,
     RawTestEntitlement,
     RawClientApplication,
-    RawPartialApplication
+    RawPartialApplication,
+    RawSubscription
 } from "./applications";
 import type { RawAutoModerationRule } from "./auto-moderation";
 import type {
@@ -606,6 +607,21 @@ export interface MessagePollVoteRemove extends BaseDispatchPacket {
     t: "MESSAGE_POLL_VOTE_REMOVE";
 }
 
+export interface SubscriptionCreatePacket extends BaseDispatchPacket {
+    d: RawSubscription;
+    t: "SUBSCRIPTION_CREATE";
+}
+
+export interface SubscriptionUpdatePacket extends BaseDispatchPacket {
+    d: RawSubscription;
+    t: "SUBSCRIPTION_UPDATE";
+}
+
+export interface SubscriptionDeletePacket extends BaseDispatchPacket {
+    d: RawSubscription;
+    t: "SUBSCRIPTION_DELETE";
+}
+
 export type AnyDispatchPacket = PresenceUpdatePacket | ReadyPacket | ResumedPacket |
 GuildCreatePacket | GuildDeletePacket | GuildUpdatePacket | ApplicationCommandPermissionsUpdatePacket | GuildAuditLogEntryCreatePacket |
 AutoModerationRuleCreatePacket | AutoModerationRuleDeletePacket | AutoModerationRuleUpdatePacket | AutoModerationActionExecutionPacket |
@@ -620,4 +636,5 @@ InviteCreatePacket | InviteDeletePacket |
 MessageCreatePacket | MessageDeletePacket | MessageDeleteBulkPacket | MessageUpdatePacket | MessageReactionAddPacket | MessageReactionRemovePacket | MessageReactionRemoveAllPacket | MessageReactionRemoveEmojiPacket |
 TypingStartPacket | UserUpdatePacket | VoiceStateUpdatePacket | VoiceChannelEffectSendPacket | VoiceChannelStatusUpdatePacket | VoiceServerUpdatePacket | WebhooksUpdatePacket | InteractionCreatePacket | SoundboardSoundsPacket | StageInstanceCreatePacket | StageInstanceDeletePacket | StageInstanceUpdatePacket |
 EntitlementCreatePacket | EntitlementUpdatePacket | EntitlementDeletePacket |
-MessagePollVoteAdd | MessagePollVoteRemove;
+MessagePollVoteAdd | MessagePollVoteRemove |
+SubscriptionCreatePacket | SubscriptionUpdatePacket | SubscriptionDeletePacket;
